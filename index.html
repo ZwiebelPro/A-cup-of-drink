@@ -3,210 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VXPloit Info</title>
+    <title>Rockk Editor</title>
     <style>
-        /* General styles */
         body {
-            background: radial-gradient(circle, rgba(128, 0, 128, 0.1) 10%, rgba(75, 0, 130, 0.5) 100%);
-            font-family: Arial, sans-serif;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #181818; /* Darker background */
+            color: #d4d4d4;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; /* Hide overflow to prevent scrollbars */
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            height: 80%;
+            max-height: 800px;
+            background-color: #252526;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #333333;
+            color: #d4d4d4;
+            padding: 12px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; /* Position for dropdown */
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: normal;
+        }
+
+        .clean-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #d4d4d4;
+            background-color: #333333; /* Black themed */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .clean-button:hover {
+            background-color: #555555;
+        }
+
+        .language-dropdown {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #d4d4d4;
+            background-color: #333333;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .language-dropdown:focus {
+            outline: none;
+        }
+
+        .language-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1;
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .language-options.active {
+            display: block;
+        }
+
+        .language-option {
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .language-option:hover {
+            background-color: #007acc;
+        }
+
+        .editor-container {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .line-numbers {
+            flex-shrink: 0;
+            background-color: #333333;
+            color: #555555;
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
             overflow-y: scroll;
-            /* Allow vertical scrolling */
-            cursor: crosshair; /* Use crosshair cursor */
         }
 
-Code 
-    /* Custom cursor style */
-    body.loaded {
-        cursor: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3E%3Crect width="16" height="2" rx="1" y="7" fill="%23a78bfa" /%3E%3Crect width="2" height="16" rx="1" x="7" fill="%23a78bfa" /%3E%3C/svg%3E'), auto;
-        /* Custom cursor with violet color */
-    }
+        .code-editor {
+            flex-grow: 1;
+            position: relative;
+            overflow: auto;
+        }
 
-    header,
-    section {
-        background: white;
-        margin: 20px auto;
-        padding: 20px;
-        border-radius: 8px;
-        max-width: 800px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        filter: blur(10px);
-        transition: opacity 4s ease-out, filter 4s ease-out;
-        /* Longer transition duration */
-    }
-
-    body.loaded header,
-    body.loaded section {
-        opacity: 1;
-        filter: blur(0);
-    }
-
-    header {
-        text-align: center;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4 {
-        color: #4B0082;
-    }
-
-    p,
-    ul,
-    table {
-        color: #555;
-    }
-
-    a {
-        background-color: #4B0082;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 16px;
-        text-decoration: none;
-        display: inline-block;
-        margin: 10px 0;
-        transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease; /* Added color transition */
-    }
-
-    a:hover {
-        background-color: #e0b3ff; /* Light purple background on hover */
-        color: #fff; /* White text on hover */
-        transform: scale(1.05); /* Scale up on hover */
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f9f9f9;
-    }
-
-    .highlight {
-        box-shadow: 0 4px 8px rgba(75, 0, 130, 0.1);
-        border: solid black;
-    }
-
-    /* Scrollbar customizations */
-    body::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    body::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 8px;
-    }
-
-    body::-webkit-scrollbar-thumb {
-        background-color: #4B0082;
-        border-radius: 8px;
-        border: 3px solid #f1f1f1;
-    }
-
-    /* Selection color */
-    ::selection {
-        background: #e0b3ff; /* Light purple/pink */
-        color: #fff; /* White text */
-    }
-
-    /* Media query for smaller screens */
-    @media (max-width: 600px) {
-        body {
+        .code-editor textarea {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
             font-size: 14px;
+            outline: none;
+            border: none;
+            resize: none;
+            overflow: auto;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace;
+            box-sizing: border-box;
         }
 
-        header,
-        section {
-            margin: 10px;
-            padding: 15px;
+        .keyword {
+            color: #4ec9b0;
+            font-weight: bold;
         }
 
-        a {
-            padding: 8px 15px;
-            font-size: 14px;
+        /* Autocomplete dropdown */
+        .autocomplete-dropdown {
+            position: absolute;
+            background-color: #2d2d30;
+            border: 1px solid #444;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 1;
+            display: none;
         }
-    }
-</style>
+
+        .autocomplete-dropdown.active {
+            display: block;
+        }
+
+        .autocomplete-dropdown li {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .autocomplete-dropdown li:hover {
+            background-color: #007acc;
+        }
+
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #4a4a4a;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>VXPLOITS</h1>
-    </header>
+    <div class="container">
+        <div class="header">
+            <h1>Rockk Editor</h1>
+            <button onclick="clearEditor()" class="clean-button">Clear</button>
+            <div class="language-dropdown" onclick="toggleLanguageOptions()">Lua</div>
+            <div id="languageOptions" class="language-options">
+                <div class="language-option" onclick="selectLanguage('Lua')">Lua</div>
+                <!-- Add more language options here -->
+            </div>
+        </div>
+        <div class="editor-container">
+            <div class="line-numbers" id="lineNumbers"></div>
+            <div class="code-editor">
+                <textarea id="codeEditor" class="editor">// Start coding here...</textarea>
+                <ul id="autocompleteDropdown" class="autocomplete-dropdown"></ul>
+            </div>
+        </div>
+    </div>
 
-<section>
-    <h2><a href="https://discord.gg/KXttX6Bm2R" target="_blank">Join Discord</a></h2>
-    <p><a href="https://discord.gg/KXttX6Bm2R" target="_blank">Get scripts and other stuff on our main hub!</a></p>
-</section>
+    <script>
+        // Function to clear the editor content
+        function clearEditor() {
+            const codeEditor = document.getElementById('codeEditor');
+            codeEditor.value = '';
+            updateLineNumbers();
+            codeEditor.focus();
+        }
 
-<section>
-    <h3>This Website is about our Server-Sided Mond Executor AND normal Mond Executor.</h3>
-    <h4>What is Mond?</h4>
-    <p>Mond is currently an undetected server-sided executor with strong support and no infections so far. A server-sided executor most likely requires scripts, and using R6 gives you higher support. It also has mobile support; you toggle it with Right-Alt, /e mond in chat. SS Executors are FE, so when you execute, it's visible to others.</p>
-    <p><b>What is Mond [WEB EXECUTOR]?</b> The normal executor is a working executor; what is there to talk about..?</p>
-    <p><b>Our Discord server itself features fun and good scripts and has a nice community :D!</b></p>
+        // Function to toggle language options dropdown
+        function toggleLanguageOptions() {
+            const languageOptions = document.getElementById('languageOptions');
+            languageOptions.classList.toggle('active');
+        }
 
-    <h2><b>Important message from our Discord server</b></h2>
-    <p>Our executor is a server-sided executor, which works like this: I make one in Roblox Studio like you see above "Mond Beta V1", then I'll get a module and add the UI in the module with a hidden script. This hidden script makes people who are friends with the owner of the SS executor whitelisted, which means when, for example, "725 stage obby" is infected, they will get the UI loaded and can use a script like a require script, get guns, and shoot people.</p>
-    <p>Now, people are arguing it can even execute print("Hello"), this is a server-sided executor that uses FE scripts; make sure to use R6 to execute more stuff. Now, y'all are testing the free version, of course, it's a little worse. It can execute fun scripts that are FE and visible to others. There's an IY | Infinite Yield script which has these FE commands: Ban, Kick, Seagull 💀, nuke, and jail, and even more. Yeah, I got banned by my own server by that.</p>
-    <p>To find good working scripts, hit up Require Scripts 2024, or some that are unpatched to make them work even better use R6 which is in the Beta Test Server not in the Free Test Server; other basic scripts are also usable. Or Google Server-Sided Scripts.</p>
-    <p>A server with bad AC has certain AC's. But a server with bad AC can basically get Server locked and then you ban all players LMAO.</p>
-</section>
+        // Function to select a programming language
+        function selectLanguage(language) {
+            toggleLanguageOptions(); // Hide language options dropdown
+            // Implement functionality based on selected language (e.g., syntax highlighting)
+            alert(`Language selected: ${language}`);
+        }
 
-<section>
-    <h4>Priceing details 💷</h4>
-    <table>
-        <tr>
-            <th>SS 1st Version</th>
-            <th>SS beta V1</th>
-            <th>SS beta V2</th>
-            <th>SS V3</th>
-            <th>Mond as normal executor</th>
-        </tr>
-        <tr>
-            <td>Free</td>
-            <td>300-900 Robux / Nitro Boost / Gift Cards</td>
-            <td>900 Robux / Nitro Boost</td>
-            <td>1.3k+ Robux</td>
-            <td>> 500 Robux / Nitro gift</td>
-        </tr>
-    </table>
+        // Line number update
+        const codeEditor = document.getElementById('codeEditor');
+        const lineNumbers = document.getElementById('lineNumbers');
 
-    <h4>Mond's 🌑 current state / Status:</h4>
-    <p>STATUS: 💜: UNDETECTED, GOOD EXECUTION<br>🟪: Backdoor in development!</p>
+        codeEditor.addEventListener('input', updateLineNumbers);
 
-    <h4>Games that were infected!</h4>
-    <ul>
-        <li>Zyleaks MM2</li>
-        <li>Obby</li>
-    </ul>
-    <p><b>Causes:</b> one termination and one ban. This is why we don't have infections as we got terminated...</p>
+        function updateLineNumbers() {
+            const lines = codeEditor.value.split('\n').length;
+            lineNumbers.innerHTML = '';
+            for (let i = 1; i <= lines; i++) {
+                const line = document.createElement('div');
+                line.textContent = i;
+                lineNumbers.appendChild(line);
+            }
+        }
 
-    <h3>Buy Mond SS Below:</h3>
-    <a href="https://discord.gg/KXttX6Bm2R" target="_blank">Buy (Verify)</a>
-</section>
+        // Autocomplete keywords
+        const keywords = [
+            'and', 'break', 'do', 'else', 'elseif',
+            'end', 'false', 'for', 'function', 'if',
+            'in', 'local', 'nil', 'not', 'or', 'repeat',
+            'return', 'then', 'true', 'until', 'while'
+        ];
 
-<script>
-    window.addEventListener('load', () => {
-        document.body.classList.add('loaded');
-    });
-</script>
+        // Autocomplete dropdown functionality
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+        let currentSuggestions = [];
+
+        codeEditor.addEventListener('input', function() {
+            const cursorPosition = codeEditor.selectionStart;
+            const textBeforeCursor = codeEditor.value.substring(0, cursorPosition);
+            const lastTyped = textBeforeCursor.trim().split(/\s+/).pop().toLowerCase(); // Get last typed word, converted to lowercase
+
+            // Clear previous suggestions
+            autocompleteDropdown.innerHTML = '';
+
+            if (lastTyped) {
+                currentSuggestions = keywords.filter(keyword => keyword.startsWith(lastTyped));
+
+                if (currentSuggestions.length > 0) {
+                    currentSuggestions.forEach(suggestion => {
+                        const li = document.createElement('li');
+                        li.textContent = suggestion;
+                        li.onclick = function() {
+                            insertTextAtCursor(suggestion.slice(lastTyped.length));
+                            hideAutocompleteDropdown();
+                            codeEditor.focus();
+                        };
+                        autocompleteDropdown.appendChild(li);
+                    });
+
+                    showAutocompleteDropdown(cursorPosition);
+                } else {
+                    hideAutocompleteDropdown();
+                }
+            } else {
+                hideAutocompleteDropdown();
+            }
+        });
+
+        function insertTextAtCursor(text) {
+            const currentText = codeEditor.value;
+            const cursorPosition = codeEditor.selectionStart;
+            codeEditor.value = currentText.substring(0, cursorPosition) + text + currentText.substring(cursorPosition);
+            codeEditor.setSelectionRange(cursorPosition + text.length, cursorPosition + text.length);
+        }
+
+        function showAutocompleteDropdown(cursorPosition) {
+            const cursorCoords = getCursorCoords(cursorPosition);
+            autocompleteDropdown.style.top = cursorCoords.top + 'px';
+            autocompleteDropdown.style.left = cursorCoords.left + 'px';
+            autocompleteDropdown.classList.add('active');
+        }
+
+        function hideAutocompleteDropdown() {
+            autocompleteDropdown.classList.remove('active');
+        }
+
+        function getCursorCoords(cursorPosition) {
+            const rect = codeEditor.getBoundingClientRect();
+            const lineHeight = parseFloat(getComputedStyle(codeEditor).lineHeight);
+            const linesAbove = codeEditor.value.substring(0, cursorPosition).split('\n').length - 1;
+            const top = rect.top + lineHeight * linesAbove;
+            const left = rect.left;
+            return { top, left };
+        }
+
+        // Handle special characters like "", '', (), [], {}, <>
+        codeEditor.addEventListener('keydown', function(event) {
+            const key = event.key;
+            const cursorPosition = codeEditor.selectionStart;
+            const text = codeEditor.value;
+
+            switch (key) {
+                case '"':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '""' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case "'":
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + "''" + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '(':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '()' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case ')':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '()' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '[':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '[]' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case ']':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '[]' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '{':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '{}' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '}':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '{}' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '<':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '<>' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+                case '>':
+                    event.preventDefault();
+                    codeEditor.value = text.substring(0, cursorPosition) + '<>' + text.substring(cursorPosition);
+                    codeEditor.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
+                    break;
+            }
+        });
+    </script>
 </body>
 </html>
