@@ -55,11 +55,11 @@
     <script>
         function validateKey() {
             const inputKey = document.getElementById('licenseKey').value;
-            const correctKey = 'X219-XI0B-XKXU-X23L';
+            const correctKey = 'X219-XI0B-XKXU-X23L'; // This is the correct key.
             if (inputKey === correctKey) {
                 showFinalMessage();
             } else {
-                document.getElementById('errorMessage').textContent = 'Invalid license key. Please try again.';
+                document.getElementById('errorMessage').textContent = 'Invalid license key, please try again.';
             }
         }
 
@@ -67,8 +67,8 @@
             const container = document.querySelector('.container');
             container.innerHTML = `
                 <h1>Last Step</h1>
-                <p>No DM @Teiyli or @Leon on Discord this message:</p>
-                <p>"AJiajdisandUJSAudbhu82zz89erhg9udwhuifgbsdig h8g24389"</p>
+                <p>No DM @Teiyli or @Leon on Discord this message to prove you are through the system:</p>
+                <p>"AJiajdisandUJSAudbhu82zz89erhg9udwhuifgbsdigh8g24389"</p>
             `;
         }
     </script>
