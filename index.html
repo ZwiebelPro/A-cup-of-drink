@@ -12,29 +12,40 @@
             justify-content: center;
             align-items: center;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
         }
         .container {
             text-align: center;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
             margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
         }
         input[type="text"] {
             padding: 10px;
             width: 250px;
             font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
         }
-        .license-key {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         .error {
             color: red;
@@ -68,7 +79,6 @@
         <input type="text" id="licenseKey" placeholder="XXXX-XXXX-XXXX-XXXX">
         <button onclick="validateKey()">Submit</button>
         <div class="error" id="errorMessage"></div>
-        <div class="license-key">The license key is: X219-XI0B-XKXU-X23L</div>
     </div>
 </body>
 </html>
