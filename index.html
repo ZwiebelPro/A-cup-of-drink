@@ -3,82 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>License Key Input</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
-        .container {
-            text-align: center;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 250px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-    </style>
-    <script>
-        function validateKey() {
-            const inputKey = document.getElementById('licenseKey').value;
-            const correctKey = 'X219-XI0B-XKXU-X23L'; // This is the correct key.
-            if (inputKey === correctKey) {
-                showFinalMessage();
-            } else {
-                document.getElementById('errorMessage').textContent = 'Invalid license key, please try again.';
-            }
-        }
-
-        function showFinalMessage() {
-            const container = document.querySelector('.container');
-            container.innerHTML = `
-                <h1>Last Step</h1>
-                <p>No DM @Teiyli or @Leon on Discord this message to prove you are through the system:</p>
-                <p>"AJiajdisandUJSAudbhu82zz89erhg9udwhuifgbsdigh8g24389"</p>
-            `;
-        }
-    </script>
+    <title>Clan Website</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Input License Key</h1>
-        <input type="text" id="licenseKey" placeholder="XXXX-XXXX-XXXX-XXXX">
-        <button onclick="validateKey()">Submit</button>
-        <div class="error" id="errorMessage"></div>
-    </div>
+    <h1>Welcome to Our Clan Website</h1>
+    <p>Download the ViperionBootstrapper:</p>
+    <a href="ViperionBootstrapper.exe" download>
+        <button>Download ViperionBootstrapper</button>
+    </a>
+    <p>**If the download is flagged as a false positive, press Ctrl+J and keep the file.</p>
 </body>
 </html>
