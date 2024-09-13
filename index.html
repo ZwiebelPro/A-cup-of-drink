@@ -4,39 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Logger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .content {
+            text-align: center;
+            margin-top: 20%;
+        }
+        .button-container {
+            position: relative;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .agree-button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .agree-button:hover {
+            background-color: darkblue;
+        }
+        .tos-link {
+            display: block;
+            margin-top: 10px;
+            color: blue;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+    <div class="content">
+        <h1>Welcome!</h1>
+        <p>Your IP address will be logged.</p>
+        <div class="button-container">
+            <button class="agree-button" onclick="agreeAndContinue()">I agree to the terms of service, and want to continue</button>
+            <a class="tos-link" onclick="showTOS()">Terms of Service</a>
+        </div>
+    </div>
+
     <script>
-        async function logIPToDiscord() {
+        // Function to get IP address from ipify API
+        async function logIP() {
             try {
-               
+                // Fetch the public IP address
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ip = ipData.ip;
                 
-                
-                await fetch('https://discordapp.com/api/webhooks/1265650819219324989/M6JCqIf1_g9hr_2fGQdfPm6uAinCdUJu1mVzgWv5FJNwsyvUOqwaJdOFDzdD1swwSrzY', {
+                // Send the IP address to your server
+                await fetch('https://your-server-url.com/log-ip', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        content: `IP Address: ${ip}`
-                    }),
+                    body: JSON.stringify({ ip: ip }),
                 });
                 
-                console.log('IP address sent to Discord:', ip);
+                console.log('IP address sent:', ip);
             } catch (error) {
                 console.error('Error fetching or sending IP address:', error);
             }
         }
 
-        
-// Dear Github, i was challanged to this, with legal permisson to my friend.
+        // Function to log IP and proceed
+        function agreeAndContinue() {
+            logIP();
+            alert('Thank you for agreeing to the terms of service. Your IP has been logged.');
+        }
 
-
-        logIPToDiscord();
+        // Function to display Terms of Service
+        function showTOS() {
+            document.body.innerHTML = `
+                <div class="content">
+                    <h1>Terms of Service</h1>
+                    <p>By clicking "I agree to the terms of service, and want to continue," you agree that your IP address will be logged.</p>
+                    <button class="agree-button" onclick="agreeAndContinue()">I agree to the terms of service, and want to continue</button>
+                </div>
+            `;
+        }
     </script>
 </body>
 </html>
-
